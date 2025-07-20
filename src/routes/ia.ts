@@ -12,11 +12,14 @@ async function getIAReport(prompt: string): Promise<string> {
     body: JSON.stringify({
       model: "llama3-8b-8192",
       messages: [{ role: "user", content: prompt }],
-      max_tokens: 150
+      max_tokens: 256
     })
   });
   const data = await res.json() as any;
   console.log("Respuesta Groq:", JSON.stringify(data, null, 2));
+  if (data.choices?.[0]?.message?.content) {
+    console.log("Texto IA:", data.choices[0].message.content);
+  }
   return data.choices?.[0]?.message?.content || "Error de la IA";
 }
 
@@ -25,13 +28,13 @@ async function iaRoutes(fastify: FastifyInstance) {
     const { nombre, descripcion, estado, fecha, responsable } = request.body as any;
 
     const prompt = `
-    Proceso: ${nombre}
-    Descripción: ${descripcion}
-    Estado: ${estado}
-    Fecha: ${fecha}
-    Responsable: ${responsable}
+      Analiza el siguiente proceso empresarial y entrega exactamente 3 sugerencias breves de mejora, cada una en una sola línea. Sé concreto y no uses más de 100 palabras en total.
 
-      Genera un breve análisis o sugerencia de mejora para este proceso empresarial, pensando como un consultor de negocios que usa IA.
+      Proceso: ${nombre}
+      Descripción: ${descripcion}
+      Estado: ${estado}
+      Fecha: ${fecha}
+      Responsable: ${responsable}
     `;
 
     try {
