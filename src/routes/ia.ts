@@ -25,13 +25,13 @@ async function iaRoutes(fastify: FastifyInstance) {
     const { nombre, descripcion, estado, fecha, responsable } = request.body as any;
 
     const prompt = `
-Proceso: ${nombre}
-Descripción: ${descripcion}
-Estado: ${estado}
-Fecha: ${fecha}
-Responsable: ${responsable}
+    Proceso: ${nombre}
+    Descripción: ${descripcion}
+    Estado: ${estado}
+    Fecha: ${fecha}
+    Responsable: ${responsable}
 
-Genera un breve análisis o sugerencia de mejora para este proceso empresarial, pensando como un consultor de negocios que usa IA.
+      Genera un breve análisis o sugerencia de mejora para este proceso empresarial, pensando como un consultor de negocios que usa IA.
     `;
 
     try {
